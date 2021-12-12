@@ -1,6 +1,7 @@
 import disnake
 from disnake.ext import commands
 import json
+from datetime import datetime
 
 intents = disnake.Intents.default()
 
@@ -9,11 +10,16 @@ bot.command_prefix = "!lv ", "!ㅣㅍ "
 
 @bot.event
 async def on_ready():
-    print("성공적으로 로그인되었습니다.")
+    print("성공적으로 로그인되었습니다." + str(datetime.now()))
 
 @bot.command()
 async def 안녕(ctx):
     await ctx.channel.send("안녕하세요!")
+
+@bot.command()
+async def 초대(ctx):
+    dm = await ctx.author.create_dm()
+    await dm.send("https://discord.com/api/oauth2/authorize?client_id=918447718781820968&permissions=8&scope=bot")
 
 @bot.command()
 async def 뭐해(ctx):
@@ -53,7 +59,7 @@ async def 학습(ctx, *text):
                 data[txt[0]] = txt[1]
                 print(data)
             f.close()
-            with open("data.json", "w") as f:
+            with open("lv/data.json", "w") as f:
                 json.dump(data, f, ensure_ascii=False)
 
             f.close()
@@ -67,7 +73,7 @@ async def 학습(ctx, *text):
 async def 말해(ctx, *text):
     if ctx.channel.id == botchannel:
         txt = text[0]
-        with open("data.json", "r")as f:
+        with open("lv/data.json", "r")as f:
             contents = f.read()
             data = json.loads(contents)
             try:
@@ -80,6 +86,6 @@ async def 말해(ctx, *text):
         await ctx.channel.send("lv.studio의 봇방에서만 사용 가능합니다.")
     return
 
-bot.run("OTE4NDQ3NzE4NzgxODIwOTY4.YbHZGA.I4a7a_1SsmWHoUpdjxCpADrCskA")
+bot.run("OTE4NDQ3NzE4NzgxODIwOTY4.YbHZGA.QOHRVZZDVndnwIB61ZTliT8OJGg")
 
 # '''
